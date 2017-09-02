@@ -1,0 +1,397 @@
+<html>
+<head>
+<title>Calculadora no científica</title>
+
+<body text="#ffffff" vLink="#ffffff" aLink="#aaaaaa" link="#ffffff" bgColor="#ffffff">
+
+<p align="center"><b><font color="#000000">Calculadora no científica</font>
+<script language="JavaScript">
+var checkbutton="";
+count=0;
+array=new Array(100);
+decimal=0;
+bracketcount=0;
+var temp="";
+var posneg=0;
+
+/* START SCROLLING MESSAGE IN CALCULATOR SCREEN */
+function scroll(jumpSpaces,position) {
+	var msg = "SuperCalc v1.0"
+	var out = ""
+	if (killScroll) {return false} 
+	for (var i=0; i<position; i++){
+	out += msg.charAt(i)}
+	for (i=1;i<jumpSpaces;i++) {
+	out += " "}
+	out += msg.charAt(position)
+	document.calc.screen.value = out
+	if (jumpSpaces <= 1) {
+	position++
+	if (msg.charAt(position) == ' ') {
+	position++ }
+	jumpSpaces = 100-position        
+}
+else if (jumpSpaces >  3) {
+jumpSpaces *= .75}
+else {
+jumpSpaces--
+}
+	if (position != msg.length) {
+		var cmd = "scroll(" + jumpSpaces + "," + position + ")";
+		scrollID = window.setTimeout(cmd,5);
+	} 
+	else {
+		scrolling = false
+		return false
+	}
+	return true;
+}
+function startScroller() {
+	if (scrolling)
+	if (!confirm('Re-initialize snapIn?'))
+		return false
+	killScroll = true
+	scrolling = true
+	var killID = window.setTimeout('killScroll=false',6)
+	scrollID = window.setTimeout('scroll(100,0)',10)
+	return true
+}
+var scrollID = Object
+var scrolling = false
+var killScroll = false
+/*END SCROLLING MESSAGE IN CALCULATOR SCREEN */
+
+function check(checkbutton)
+{  if(checkbutton!=0&&checkbutton!=1&&checkbutton!=2&&checkbutton!=3&&
+      checkbutton!=4&&checkbutton!=5&&checkbutton!=6&&checkbutton!=7&&checkbutton!=8&&checkbutton!=9)
+   {  if(checkbutton=='?')
+         alert('How to use SuperCalc version 1.0\n\n+\tadd\n-\tsubtract or use as a negative sign\n/\tdivide\nx\tmultiply\nPI\tpi value of 3.14159\n(\topen parenthesis\n)\tclose parentheses\n1/x\tturns the previously entered number inot a fraction of 1/(previous number)\n+/-\tturn previously entered number positive or negative\nsqt\tsquare root of the number previously entered\n^\traise the previously entered number to a power\n%\tturns the previously entered number to a percentage value\n.\tdecimal\n=\tevaluates the problem and gives the answer\nce\tclears the last value entered\nc\tclears everything\n?\tuh...what could this be?');
+
+      if(checkbutton=='+-')
+      {  temparray=new Array(20);
+         temp=count;
+         tempcount=0;
+         stop=0;
+         do
+         {  if(array[temp-1]=='-'||array[temp-1]=='('||array[temp-1]=='.'||array[temp-1]==0||array[temp-1]==1||array[temp-1]==2||array[temp-1]==3||array[temp-1]==4||array[temp-1]==5||array[temp-1]==6||array[temp-1]==7||array[temp-1]==8||array[temp-1]==9)
+            { 
+               temparray[tempcount]=array[temp-1];
+               tempcount++;
+               temp--;
+            }
+            else
+               stop++;
+         }while(stop==0);  
+         temp="";
+         for(i=tempcount-1;i>=0;i--)
+            temp=temp+temparray[i];
+         if(array[count]==temp)
+         { array[count]=temp
+           document.calc.screen.value=document.calc.screen.value+array[count];
+         }
+         else
+         { array[count]='-';
+           array[count+1]=temp;
+           document.calc.screen.value=document.calc.screen.value+array[count]+array[count+1];
+         }
+         count++;
+        }
+
+      if(checkbutton=='1/x')
+      {  temparray=new Array(20);
+         temp=count;
+         tempcount=0;
+         stop=0;
+         do
+         {  if(array[temp-1]=='.'||array[temp-1]==0||array[temp-1]==1||array[temp-1]==2||array[temp-1]==3||array[temp-1]==4||array[temp-1]==5||array[temp-1]==6||array[temp-1]==7||array[temp-1]==8||array[temp-1]==9)
+            {  temparray[tempcount]=array[temp-1];
+               tempcount++;
+               temp--;
+            }
+            else
+            {  temp="";
+               for(i=tempcount-1;i>=0;i--)
+                  temp=temp+temparray[i];
+               count=count-tempcount;
+               array[count]=1/temp;
+               document.calc.screen.value="";
+               for(x=0;x<=count;x++)
+                  document.calc.screen.value=document.calc.screen.value+array[x];
+               count++;
+               decimal++;
+               stop++;
+            }
+          }while(stop==0);  
+      }         
+      if(checkbutton=='sqt')
+      {  temparray=new Array(20);
+         temp=count;
+         tempcount=0;
+         stop=0;
+         do
+         {  if(array[temp-1]=='.'||array[temp-1]==0||array[temp-1]==1||array[temp-1]==2||array[temp-1]==3||array[temp-1]==4||array[temp-1]==5||array[temp-1]==6||array[temp-1]==7||array[temp-1]==8||array[temp-1]==9)
+            {  temparray[tempcount]=array[temp-1];
+               tempcount++;
+               temp--;
+            }
+            else
+            {  temp="";
+               for(i=tempcount-1;i>=0;i--)
+                  temp=temp+temparray[i];
+               count=count-tempcount;
+               array[count]=Math.sqrt(temp);
+               document.calc.screen.value="";
+               for(x=0;x<=count;x++)
+                  document.calc.screen.value=document.calc.screen.value+array[x];
+               count++;
+               stop++;
+            }
+          }while(stop==0);  
+      }         
+      if(checkbutton=='^')
+      {  var valu="";
+         var power="";
+         temparray=new Array(20);
+         temp=count;
+         tempcount=0;
+         stop=0;
+         do
+         {  if(array[temp-1]=='.'||array[temp-1]==0||array[temp-1]==1||array[temp-1]==2||array[temp-1]==3||array[temp-1]==4||array[temp-1]==5||array[temp-1]==6||array[temp-1]==7||array[temp-1]==8||array[temp-1]==9)
+            {  temparray[tempcount]=array[temp-1];
+               tempcount++;
+               temp--;
+            }
+            else
+            {  for(i=tempcount-1;i>=0;i--)
+                  valu=valu+temparray[i];
+               power=prompt("Raise "+valu+" to the power of","");
+               count=count-tempcount;
+               array[count]=Math.pow(valu,power);
+               document.calc.screen.value="";
+               for(x=0;x<=count;x++)
+                  document.calc.screen.value=document.calc.screen.value+array[x];
+               count++;
+               stop++;
+            }
+          }while(stop==0);  
+      }         
+      if(checkbutton=='3.14159')
+      {  array[count]=checkbutton;
+         if(array[count-1]!='+'&&array[count-1]!='-'&&array[count-1]!='*'&&array[count-1]!='/'&&array[count-1]!='('&&array[count-1]!=""&&array[count-1]!=undefined)
+            alert('Error. You must add, subtract, multiply or divide PI.');
+         else
+         {
+           count++;
+           decimal++;
+           document.calc.screen.value=document.calc.screen.value+array[count-1];
+         }
+      }
+      if(checkbutton=='+')
+      {  decimal=0;
+         array[count]=checkbutton;
+         count++;
+         document.calc.screen.value=document.calc.screen.value+array[count-1];
+      }
+      if(checkbutton=='-')
+      {  decimal=0;
+         array[count]=checkbutton;
+         count++;
+         document.calc.screen.value=document.calc.screen.value+array[count-1];
+      }
+      if(checkbutton=='/')
+      {  decimal=0;
+         array[count]=checkbutton;
+         count++;
+         document.calc.screen.value=document.calc.screen.value+array[count-1];
+      }
+      if(checkbutton=='*')
+      {  decimal=0;
+         array[count]=checkbutton;
+         count++;
+         document.calc.screen.value=document.calc.screen.value+array[count-1];
+      }
+      if(checkbutton=='%')
+      {  temparray=new Array(20);
+         decimal++;
+         temp=count;
+         tempcount=0;
+         stop=0;
+         do
+         {  if(array[temp-1]=='.'||array[temp-1]==0||array[temp-1]==1||array[temp-1]==2||array[temp-1]==3||array[temp-1]==4||array[temp-1]==5||array[temp-1]==6||array[temp-1]==7||array[temp-1]==8||array[temp-1]==9)
+            {  temparray[tempcount]=array[temp-1];
+               tempcount++;
+               temp--;
+            }
+            else
+            {  temp="";
+               for(i=tempcount-1;i>=0;i--)
+                  temp=temp+temparray[i];
+               count=count-tempcount;
+               array[count]=temp/100;
+               document.calc.screen.value="";
+               for(x=0;x<=count;x++)
+                  document.calc.screen.value=document.calc.screen.value+array[x];
+               count++;
+               stop++;
+            }
+          }while(stop==0);  
+      }
+      if(checkbutton=='.')
+      {  if(decimal>0)
+         { document.calc.screen.value=document.calc.screen.value;
+         }
+         else
+         { document.calc.screen.value=document.calc.screen.value+'.';
+           decimal++;
+         }
+         array[count]=checkbutton;
+         count++;
+      }
+      if(checkbutton=='00')
+      {  document.calc.screen.value=document.calc.screen.value+'00';
+         array[count]=checkbutton;
+         count++;
+      }
+      if(checkbutton=='c')
+      {  document.calc.screen.value="";
+         count=0;
+         decimal=0;
+         bracketcount=0;
+         array[count]=0;
+      }
+      if(checkbutton=='ce')
+      {  var t="";
+         if(count<=0)
+         {  decimal=0;
+            bracketcount=0;
+            count=0;
+            array[count]=0;
+            document.calc.screen.value="";
+         }
+         else
+         {  count--;
+            document.calc.screen.value="";
+            for(x=0;x<count;x++)
+               document.calc.screen.value=document.calc.screen.value+array[x];
+         }
+      }
+      if(checkbutton=='(')
+      {  document.calc.screen.value=document.calc.screen.value+checkbutton;
+         bracketcount++;
+         array[count]=checkbutton;
+         count++;
+      }
+      if(checkbutton==')')
+      {  document.calc.screen.value=document.calc.screen.value+checkbutton;
+         bracketcount--;
+         array[count]=checkbutton;
+         count++;
+      }
+      if(checkbutton=='=')
+      {   if((array[0]!='('&&array[0]!='-'&&array[0]!='3.14159'&&array[0]!=0&&array[0]!=1&&array[0]!=2&&array[0]!=3&&array[0]!=4&&array[0]!=5&&array[0]!=6&&array[0]!=7&&array[0]!=8&&array[0]!=9)||bracketcount!=0)
+          { if(document.calc.screen.value==""||document.calc.screen.value==undefined)
+               alert('Error! You have not entered anything.');
+            if(bracketcount!=0)
+            {  alert('Error! Check your ( ) parentheses.');
+               bracketcount=0;
+            }
+            if(array[0]=='+'||array[0]=='-'||array[0]=='*'||array[0]=='/'||array[0]==')')
+               alert('Error! The first entry must be an integer.')
+            else
+               document.calc.screen.value=eval(document.calc.screen.value);
+          }
+          else
+            document.calc.screen.value=eval(document.calc.screen.value);  
+      }
+   }
+   else
+   {  array[count]=checkbutton;
+      count++;
+      document.calc.screen.value=document.calc.screen.value+array[count-1];
+   }
+}
+
+</script>
+</font></b></p>
+<center>
+<form name="calc">
+  <table cellSpacing="0" cellPadding="5" bgColor="darkblue" border="3">
+    <tr>
+      <td>
+      <table cellSpacing="0" cellPadding="5" border="0">
+        <tr>
+          <td><input size="16" name="screen"></td>
+        </tr>
+      </table>
+      <table cellSpacing="5" cellPadding="0" border="0">
+        <tr>
+          <td>
+          <input onclick="check('c')" type="button" value=" c " name="clear"></td>
+          <td>
+          <input onclick="check('ce')" type="button" value="ce" name="clearentry"></td>
+          <td></td>
+          <td>
+          <input onclick="check('(')" type="button" value=" (  " name="leftbracket"></td>
+          <td>
+          <input onclick="check(')')" type="button" value="  ) " name="rightbracket"></td>
+        </tr>
+        <tr>
+          <td><input onclick="check('+')" type="button" value=" + " name="add"></td>
+          <td><input onclick="check(7)" type="button" value=" 7 " name="seven"></td>
+          <td><input onclick="check(8)" type="button" value=" 8 " name="eight"></td>
+          <td><input onclick="check(9)" type="button" value=" 9 " name="nine"></td>
+          <td>
+          <input onclick="check('%')" type="button" value=" %" name="percent"></td>
+        </tr>
+        <tr>
+          <td>
+          <input onclick="check('-')" type="button" value=" -- " name="subtract"></td>
+          <td><input onclick="check(4)" type="button" value=" 4 " name="four"></td>
+          <td><input onclick="check(5)" type="button" value=" 5 " name="five"></td>
+          <td><input onclick="check(6)" type="button" value=" 6 " name="six"></td>
+          <td>
+          <input onclick="check('3.14159')" type="button" value=" PI" name="pi"></td>
+        </tr>
+        <tr>
+          <td>
+          <input onclick="check('*')" type="button" value=" × " name="multiply"></td>
+          <td><input onclick="check(1)" type="button" value=" 1 " name="one"></td>
+          <td><input onclick="check(2)" type="button" value=" 2 " name="two"></td>
+          <td><input onclick="check(3)" type="button" value=" 3 " name="three"></td>
+          <td>
+          <input onclick="check('sqt')" type="button" value="sqt" name="equalls1"></td>
+        </tr>
+        <tr>
+          <td>
+          <input onclick="check('/')" type="button" value=" ÷ " name="divide"></td>
+          <td><input onclick="check(0)" type="button" value=" 0 " name="zero"></td>
+          <td>
+          <input onclick="check('00')" type="button" value="00" name="doublezero"></td>
+          <td>
+          <input onclick="check('.')" type="button" value=" • " name="decimal"></td>
+          <td>
+          <input onclick="check('^')" type="button" value="  ^ " name="power"></td>
+        </tr>
+        <tr>
+          <td>
+          <input onclick="check('=')" type="button" value=" = " name="equalls"></td>
+          <td><input onclick="check('?')" type="button" value=" ? " name="help"></td>
+          <td></td>
+          <td>
+          <input onclick="check('+-')" type="button" value="+/-" name="posneg"></td>
+          <td>
+          <input onclick="check('1/x')" type="button" value="1/x" name="fraction"></td>
+        </tr>
+      </table>
+      <p><font color="white" size="-2">SuperCalc 1.0
+      <a target="new" href="mailto:hotrodder@rocketmail.com">Ryan Gilfether</a> 
+      1999</font> </td>
+    </tr>
+  </table>
+</form>
+</center>
+
+
+</body>
+
+</html>
