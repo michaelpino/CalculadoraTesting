@@ -14,7 +14,6 @@ bracketcount=0;
 var temp="";
 var posneg=0;
 
-/* START SCROLLING MESSAGE IN CALCULATOR SCREEN */
 function scroll(jumpSpaces,position) {
 	var msg = "SuperCalc v1.0"
 	var out = ""
@@ -98,55 +97,10 @@ function check(checkbutton)
         }
 
       if(checkbutton=='1/x')
-      {  temparray=new Array(20);
-         temp=count;
-         tempcount=0;
-         stop=0;
-         do
-         {  if(array[temp-1]=='.'||array[temp-1]==0||array[temp-1]==1||array[temp-1]==2||array[temp-1]==3||array[temp-1]==4||array[temp-1]==5||array[temp-1]==6||array[temp-1]==7||array[temp-1]==8||array[temp-1]==9)
-            {  temparray[tempcount]=array[temp-1];
-               tempcount++;
-               temp--;
-            }
-            else
-            {  temp="";
-               for(i=tempcount-1;i>=0;i--)
-                  temp=temp+temparray[i];
-               count=count-tempcount;
-               array[count]=1/temp;
-               document.calc.screen.value="";
-               for(x=0;x<=count;x++)
-                  document.calc.screen.value=document.calc.screen.value+array[x];
-               count++;
-               decimal++;
-               stop++;
-            }
-          }while(stop==0);  
+      {  
       }         
       if(checkbutton=='sqt')
-      {  temparray=new Array(20);
-         temp=count;
-         tempcount=0;
-         stop=0;
-         do
-         {  if(array[temp-1]=='.'||array[temp-1]==0||array[temp-1]==1||array[temp-1]==2||array[temp-1]==3||array[temp-1]==4||array[temp-1]==5||array[temp-1]==6||array[temp-1]==7||array[temp-1]==8||array[temp-1]==9)
-            {  temparray[tempcount]=array[temp-1];
-               tempcount++;
-               temp--;
-            }
-            else
-            {  temp="";
-               for(i=tempcount-1;i>=0;i--)
-                  temp=temp+temparray[i];
-               count=count-tempcount;
-               array[count]=Math.sqrt(temp);
-               document.calc.screen.value="";
-               for(x=0;x<=count;x++)
-                  document.calc.screen.value=document.calc.screen.value+array[x];
-               count++;
-               stop++;
-            }
-          }while(stop==0);  
+      {  
       }         
       if(checkbutton=='^')
       {  var valu="";
@@ -211,30 +165,7 @@ function check(checkbutton)
          document.calc.screen.value=document.calc.screen.value+array[count-1];
       }
       if(checkbutton=='%')
-      {  temparray=new Array(20);
-         decimal++;
-         temp=count;
-         tempcount=0;
-         stop=0;
-         do
-         {  if(array[temp-1]=='.'||array[temp-1]==0||array[temp-1]==1||array[temp-1]==2||array[temp-1]==3||array[temp-1]==4||array[temp-1]==5||array[temp-1]==6||array[temp-1]==7||array[temp-1]==8||array[temp-1]==9)
-            {  temparray[tempcount]=array[temp-1];
-               tempcount++;
-               temp--;
-            }
-            else
-            {  temp="";
-               for(i=tempcount-1;i>=0;i--)
-                  temp=temp+temparray[i];
-               count=count-tempcount;
-               array[count]=temp/100;
-               document.calc.screen.value="";
-               for(x=0;x<=count;x++)
-                  document.calc.screen.value=document.calc.screen.value+array[x];
-               count++;
-               stop++;
-            }
-          }while(stop==0);  
+      {  
       }
       if(checkbutton=='.')
       {  if(decimal>0)
@@ -290,13 +221,13 @@ function check(checkbutton)
       if(checkbutton=='=')
       {   if((array[0]!='('&&array[0]!='-'&&array[0]!='3.14159'&&array[0]!=0&&array[0]!=1&&array[0]!=2&&array[0]!=3&&array[0]!=4&&array[0]!=5&&array[0]!=6&&array[0]!=7&&array[0]!=8&&array[0]!=9)||bracketcount!=0)
           { if(document.calc.screen.value==""||document.calc.screen.value==undefined)
-               alert('Error! You have not entered anything.');
+               alert('Error! No se ha ingresado nada');
             if(bracketcount!=0)
             {  alert('Error! Check your ( ) parentheses.');
                bracketcount=0;
             }
             if(array[0]=='+'||array[0]=='-'||array[0]=='*'||array[0]=='/'||array[0]==')')
-               alert('Error! The first entry must be an integer.')
+               alert('Error! La primera entrada debe ser un entero.')
             else
                document.calc.screen.value=eval(document.calc.screen.value);
           }
@@ -384,7 +315,7 @@ function check(checkbutton)
         </tr>
       </table>
       <p><font color="white" size="-2">SuperCalc 1.0
-      <a target="new" href="mailto:hotrodder@rocketmail.com">Ryan Gilfether</a> 
+      <a target="new" href="mailto:a@a.com">Mike Pino</a> 
       1999</font> </td>
     </tr>
   </table>
